@@ -1,3 +1,4 @@
+
 #compiling qB
 FROM alpine:3.16 as compilingqB
 
@@ -60,7 +61,7 @@ COPY --chmod=755 root /
 COPY --from=compilingqB --chmod=755 /qbittorrent /
 
 #install bash curl tzdata python3 shadow qt6 zip
-RUN apk add --no-cache bash curl ca-certificates tzdata python3 shadow qt6-qtbase-sqlite qt6-qtbase libexecinfo \
+RUN apk add --no-cache bash curl ca-certificates tzdata python3 shadow qt6-qtbase-sqlite qt6-qtbase libexecinfo zip \
 #install rclone
 && curl https://rclone.org/install.sh | bash \
 #install s6-overlay
