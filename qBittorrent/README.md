@@ -1,5 +1,7 @@
 ## 群晖nas自用：
 
+DOCKER_BUILDKIT=1 docker build -t xxxxxx .
+
 ### GitHub:
 
 [https://github.com/gshang2017/docker](https://github.com/gshang2017/docker)
