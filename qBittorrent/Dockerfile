@@ -6,8 +6,7 @@ ARG LIBTORRENT_VER=1.2.17
 ARG QBITTORRENT_VER=4.4.5
 ARG QBITTORRENT_EE_VER=4.4.5.10
 
-RUN apk add --no-cache ca-certificates cmake build-base boost-dev python3-dev \
-         py3-setuptools samurai qt6-qttools-dev libexecinfo-dev \
+RUN apk add --no-cache ca-certificates cmake build-base boost-dev python3-dev py3-setuptools samurai qt6-qttools-dev libexecinfo-dev \
 #libtorrent-rasterbar
 && mkdir /qbbuild \
 && wget -P /qbbuild https://github.com/arvidn/libtorrent/releases/download/v${LIBTORRENT_VER}/libtorrent-rasterbar-${LIBTORRENT_VER}.tar.gz \
