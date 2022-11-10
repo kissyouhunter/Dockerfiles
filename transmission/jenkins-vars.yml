@@ -1,0 +1,29 @@
+---
+
+# jenkins variables
+project_name: docker-transmission
+external_type: alpine_repo
+release_type: stable
+release_tag: latest
+ls_branch: master
+repo_vars:
+  - BUILD_VERSION_ARG = 'TRANSMISSION_VERSION'
+  - LS_USER = 'linuxserver'
+  - LS_REPO = 'docker-transmission'
+  - CONTAINER_NAME = 'transmission'
+  - DOCKERHUB_IMAGE = 'linuxserver/transmission'
+  - DEV_DOCKERHUB_IMAGE = 'lsiodev/transmission'
+  - PR_DOCKERHUB_IMAGE = 'lspipepr/transmission'
+  - DIST_IMAGE = 'alpine'
+  - DIST_TAG = '3.16'
+  - DIST_REPO = 'http://dl-cdn.alpinelinux.org/alpine/v3.16/community/'
+  - DIST_REPO_PACKAGES = 'transmission-daemon'
+  - MULTIARCH='true'
+  - CI='true'
+  - CI_WEB='true'
+  - CI_PORT='9091'
+  - CI_SSL='false'
+  - CI_DELAY='120'
+  - CI_DOCKERENV='TZ=US/Pacific'
+  - CI_AUTH='user:password'
+  - CI_WEBPATH=''
