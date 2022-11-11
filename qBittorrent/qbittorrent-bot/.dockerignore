@@ -1,0 +1,9 @@
+.git
+.gitignore
+.github
+.gitattributes
+READMETEMPLATE.md
+README.md
+Dockerfile
+docker-compose.yml
+Dockerfile_buster
