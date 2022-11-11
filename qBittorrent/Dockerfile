@@ -92,6 +92,7 @@ RUN apk add --no-cache build-base linux-headers bash curl ca-certificates tzdata
     # qb bot
     && cp -f /app/config.example.toml /app/config.toml \
     && cd /app && pip3 install -r requirements.txt \
+    && chmod +x /run.sh \
     #clear
     && rm -rf /var/cache/apk/* /tmp/*
 
