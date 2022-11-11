@@ -62,7 +62,7 @@ ADD ./qbittorrent-bot /app
 COPY ./run.sh /
 
 #install bash curl tzdata python3 shadow qt6 zip
-RUN apk add --no-cache bash curl ca-certificates tzdata python3 shadow qt6-qtbase-sqlite qt6-qtbase libexecinfo zip \
+RUN apk add --no-cache build-base linux-headers bash curl ca-certificates tzdata python3 shadow qt6-qtbase-sqlite qt6-qtbase libexecinfo zip \
     #install rclone
     && curl https://rclone.org/install.sh | bash \
     #install s6-overlay
@@ -89,6 +89,9 @@ RUN apk add --no-cache bash curl ca-certificates tzdata python3 shadow qt6-qtbas
     && echo $Newtrackers >/tmp/Newtrackers.txt \
     && sed -i '/Session\\AdditionalTrackers=/r /tmp/Newtrackers.txt' /usr/local/qbittorrent/defaults/qBittorrent.conf \
     && sed -i '1,/^Session\\AdditionalTrackers=.*/{//d;}' /usr/local/qbittorrent/defaults/qBittorrent.conf \
+    # qb bot
+    && cp -f /app/config.example.toml /app/config.toml \
+    && cd /app && pip3 install -r requirements.txt \
     #clear
     && rm -rf /var/cache/apk/* /tmp/*
 
