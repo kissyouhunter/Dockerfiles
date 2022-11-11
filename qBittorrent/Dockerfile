@@ -42,7 +42,7 @@ RUN apk add --no-cache ca-certificates cmake build-base boost-dev python3-dev py
     && cp --parents /usr/lib/libtorrent-rasterbar.so.* /qbittorrent
 
 # docker qB
-FROM alpine:3.16
+FROM python:3.10.8-alpine3.16
 
 ARG S6_VER=3.1.2.1
 
@@ -58,6 +58,8 @@ ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0
 
 COPY --chmod=755 root /
 COPY --from=compilingqB --chmod=755 /qbittorrent /
+ADD ./qbittorrent-bot /app
+COPY ./run.sh /
 
 #install bash curl tzdata python3 shadow qt6 zip
 RUN apk add --no-cache bash curl ca-certificates tzdata python3 shadow qt6-qtbase-sqlite qt6-qtbase libexecinfo zip \
