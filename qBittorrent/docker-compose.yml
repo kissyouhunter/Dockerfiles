@@ -6,11 +6,11 @@ services:
     command: 'bash run.sh'
     container_name: qbittorrent
     hostname: qbitorrent
-    network_mode: bridge
+    network_mode: 'bridge'
     ports:
       - '8989:8989' # web访问端口
-      - '6881:6881' # BT下载监听端口
-      - '6881:6881/udp' # BT下载DHT监听端口
+      - '20808:20808' # BT下载监听端口
+      - '20808:20808/udp' # BT下载DHT监听端口
     environment:
       UMASK: 022
       UID: 0
@@ -24,4 +24,3 @@ services:
       - ./qbittorrent/config:/config # qBittorrent配置文件位置
       - ./qbittorrent/Downloads:/Downloads # qBittorrent下载位置，需要和下面一致
       - ./qbittorrent/bot/config.toml:/app/config.toml # bot 的配置文件,需要提前放到对应目录里
-
