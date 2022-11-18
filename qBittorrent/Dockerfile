@@ -97,5 +97,5 @@ RUN apk add --no-cache build-base linux-headers bash curl ca-certificates tzdata
     && rm -rf /var/cache/apk/* /tmp/*
 
 VOLUME /Downloads /config
-EXPOSE 8989 6881 6881/udp
+EXPOSE 8989 20808 20808/udp
 ENTRYPOINT [ "/init" ]
