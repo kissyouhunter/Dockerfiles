@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 def reboot_bot(update: Update, context: CallbackContext):
-    logger.info('/help from %s', update.message.from_user.first_name)
+    logger.info('/reboot from %s', update.message.from_user.first_name)
 
     update.message.reply_html('bot正在重启')
     python = sys.executable
