@@ -4,8 +4,9 @@ ADD ./ /app
 
 RUN rm -f Dockerfile \
     && pip install openai \
-    && pip install pyTelegramBotAPI \
-    && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" >  /etc/timezone
+    && pip install pyTelegramBotAPI
+
+ENV TZ=Asia/Shanghai
 
 WORKDIR /app
 
