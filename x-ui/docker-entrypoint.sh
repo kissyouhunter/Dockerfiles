@@ -22,9 +22,9 @@ TIME() {
 x-ui restart
 x-ui enable
 
-TIME g "默认账号：admin"
-TIME g "默认密码：admin"
-TIME g "默认端口：54321"
+#TIME g "默认账号：admin"
+#TIME g "默认密码：admin"
+#TIME g "默认端口：54321"
 
 tail -f /dev/null;
 
