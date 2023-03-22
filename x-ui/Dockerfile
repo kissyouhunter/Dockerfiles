@@ -1,17 +1,14 @@
-FROM debian:11.2-slim
-
-MAINTAINER kissyouhunter
-
-COPY ./docker-entrypoint.sh /root/
-
-RUN apt update \
-    && apt install -y wget systemctl \
-    && apt install -y --no-install-recommends -y ca-certificates \
-    && wget https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install.sh && bash install.sh \
-    && chmod a+x /root/docker-entrypoint.sh && mv /root/docker-entrypoint.sh /bin/docker-entrypoint
-    
+FROM golang:latest AS builder
 WORKDIR /root
+COPY . .
+RUN go build main.go
 
-ENTRYPOINT ["/bin/docker-entrypoint"]
 
-CMD ["/bin/bash"]
+FROM debian:11-slim
+RUN apt-get update && apt-get install -y --no-install-recommends -y ca-certificates \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+WORKDIR /root
+COPY --from=builder  /root/main /root/x-ui
+COPY bin/. /root/bin/.
+VOLUME [ "/root/" ]
+CMD [ "./x-ui" ]
