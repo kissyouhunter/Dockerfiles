@@ -56,7 +56,7 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/chatgpt-web:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/x-ui:latest
 
       - name: Notify on failure
         if: ${{ failure() }}
