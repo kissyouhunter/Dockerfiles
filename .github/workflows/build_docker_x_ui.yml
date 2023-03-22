@@ -9,6 +9,10 @@ on:
         required: false
         default: 'false'
 
+env:
+  REPO_URL: https://github.com/FranzKafkaYu/x-ui.git
+  SERVERCHAN_SCKEY: true
+
 jobs:
   build_docker:
     name: Build docker
@@ -30,7 +34,7 @@ jobs:
 
       - name: Clone source code
         run: |
-          git clone https://github.com/FranzKafkaYu/x-ui.git docker_build
+          git clone $REPO_URL docker_build
           cp -f ${{ github.workspace }}/x-ui/Dockerfile docker_build/Dockerfile
 
       - name: Set up QEMU
