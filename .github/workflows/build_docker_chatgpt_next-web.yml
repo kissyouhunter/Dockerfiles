@@ -10,7 +10,7 @@ on:
         default: 'false'
 
 env:
-  REPO_URL: https://github.com/Yidadaa/ChatGPT-Next-Web.git
+  REPO_URL: https://github.com/kissyouhunter/ChatGPT-Next-Web.git
   SERVERCHAN_SCKEY: true
 
 jobs:
