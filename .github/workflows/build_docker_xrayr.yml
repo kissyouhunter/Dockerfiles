@@ -10,7 +10,7 @@ on:
         default: 'false'
 
 env:
-  REPO_URL: https://github.com/Rudloff/alltube.git
+  REPO_URL: https://github.com/XrayR-project/XrayR.git
   SERVERCHAN_SCKEY: true
 
 jobs:
