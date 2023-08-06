@@ -10,7 +10,7 @@ on:
         default: 'false'
 
 env:
-  REPO_URL: https://github.com/kissyouhunter/lsky-pro-docker.git
+  REPO_URL: https://github.com/kissyouhunter/lsky-pro.git
   SERVERCHAN_SCKEY: true
 
 jobs:
