@@ -10,7 +10,7 @@ on:
         default: 'false'
 
 env:
-  REPO_URL: https://github.com/FranzKafkaYu/x-ui.git
+  REPO_URL: https://github.com/vaxilu/x-ui.git
   SERVERCHAN_SCKEY: true
 
 jobs:
