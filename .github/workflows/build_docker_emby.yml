@@ -1,4 +1,4 @@
-name: build_docker X-UI
+name: build_docker emby
 
 on:
   repository_dispatch:
@@ -10,7 +10,7 @@ on:
         default: 'false'
 
 env:
-  REPO_URL: https://github.com/vaxilu/x-ui.git
+  REPO_URL: https://github.com/kissyouhunter/Dockerfiles.git
   SERVERCHAN_SCKEY: true
 
 jobs:
@@ -27,7 +27,7 @@ jobs:
           rm -rf CPU
           if [[ "${SERVERCHAN_SCKEY}" == "true" ]]; then
             curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=🎉 主人：
-            您正在使用kissyouhunter仓库的 {CPU型号为 [ ${CPUNAME} ] 核心数 为 [ ${CPUCORES} ] 线程数为 [ $(nproc) ]的机器} 编译您自己的 x-ui docker images,请耐心等待...... 😋" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+            您正在使用kissyouhunter仓库的 {CPU型号为 [ ${CPUNAME} ] 核心数 为 [ ${CPUCORES} ] 线程数为 [ $(nproc) ]的机器} 编译您自己的 emby docker images,请耐心等待...... 😋" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
           fi
       - name: Checkout
         uses: actions/checkout@v3
@@ -52,21 +52,21 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v4
         with:
-          context: ./docker_build
+          context: ./docker_build/emby
           push: true
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: linux/amd64
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/x-ui:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/emby:4.7.13.0
 
       - name: Notify on failure
         if: ${{ failure() }}
         run: |
             curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的😭主人😭：
-            您使用kissyouhunter仓库的 x-ui docker images 失败了，请及时处理！😭" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+            您使用kissyouhunter仓库的 emby docker images 失败了，请及时处理！😭" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
 
       - name: telegram_bot
         run: |
           if [[ "${SERVERCHAN_SCKEY}" == "true" ]]; then
             curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的✨主人✨：
-            您使用kissyouhunter仓库编译 x-ui docker images 完成了！💐" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+            您使用kissyouhunter仓库编译 emby docker images 完成了！💐" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
           fi
