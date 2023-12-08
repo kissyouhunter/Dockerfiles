@@ -37,7 +37,7 @@ jobs:
           git clone $REPO_URL docker_build
           sed -i 's/http_addr = "0.0.0.0:8080"/http_addr = "0.0.0.0:80"/' ./docker_build/config.toml
           sed -i 's/EXPOSE 8080 9394/EXPOSE 80 9394/' ./docker_build/Dockerfile
-          ./docker_build/Dockerfile
+          cat ./docker_build/Dockerfile
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
