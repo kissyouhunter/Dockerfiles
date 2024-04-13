@@ -10,7 +10,7 @@ on:
         default: 'false'
 
 env:
-  REPO_URL: https://github.com/kissyouhunter/mihomo.git
+  REPO_URL: https://github.com/kissyouhunter/Dockerfiles.git
   SERVERCHAN_SCKEY: true
 
 jobs:
@@ -34,7 +34,7 @@ jobs:
 
       - name: Clone source code
         run: |
-          git clone -b Meta $REPO_URL docker_build
+          git clone $REPO_URL docker_build
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -52,11 +52,11 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v5
         with:
-          context: ./docker_build
+          context: ./docker_build/mihomo
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/clash-meta:1.18.3
+            ${{ secrets.DOCKERHUB_USERNAME }}/mihomo:1.18.3
 
       - name: Notify on failure
         if: ${{ failure() }}
