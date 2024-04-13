@@ -34,7 +34,7 @@ jobs:
 
       - name: Clone source code
         run: |
-          git clone -b meta $REPO_URL docker_build
+          git clone -b Meta $REPO_URL docker_build
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
