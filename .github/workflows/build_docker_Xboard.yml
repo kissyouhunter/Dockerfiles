@@ -8,9 +8,17 @@ on:
         description: 'SSH connection to Actions'
         required: false
         default: 'false'
+      registry:
+        description: 'Choose registry to push image (dockerhub or ghcr)'
+        required: true
+        default: 'ghcr'
+        type: choice
+        options:
+          - dockerhub
+          - ghcr
 
 env:
-  REPO_URL: https://github.com/cedar2025/Xboard.git #https://github.com/kissyouhunter/Xboard.git
+  REPO_URL: https://hub.doti.cc/kissyouhunter/Xboard-20250226.git
   SERVERCHAN_SCKEY: true
 
 jobs:
@@ -27,8 +35,9 @@ jobs:
           rm -rf CPU
           if [[ "${SERVERCHAN_SCKEY}" == "true" ]]; then
             curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=🎉 主人：
-            您正在使用kissyouhunter仓库的 {CPU型号为 [ ${CPUNAME} ] 核心数 为 [ ${CPUCORES} ] 线程数为 [ $(nproc) ]的机器} 编译您自己的 xboard docker images,请耐心等待...... 😋" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+            您正在使用kissyouhunter仓库的 {CPU型号为 [ ${CPUNAME} ] 核心数 为 [ ${CPUCORES} ] 线程数为 [ $(nproc) ]的机器} 编译您自己的 xboard docker images (推送至 ${{ inputs.registry }})，请耐心等待...... 😋" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
           fi
+
       - name: Checkout
         uses: actions/checkout@main
 
@@ -42,17 +51,20 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      #- name: Login to DockerHub
-      #  uses: docker/login-action@v3
-      #  with:
-      #    username: ${{ secrets.DOCKERHUB_USERNAME }}
-      #    password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to DockerHub
+        if: ${{ inputs.registry == 'dockerhub' }}
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Login to GitHub Container Registry
+        if: ${{ inputs.registry == 'ghcr' }}
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.REPO_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push
         id: docker_build
@@ -62,18 +74,18 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            #${{ secrets.DOCKERHUB_USERNAME }}/xboard:20250226
-            ghcr.io/${{ github.repository }}/xboard:20250226
+            ${{ inputs.registry == 'dockerhub' && format('{0}/xboard:20250226', secrets.DOCKERHUB_USERNAME) || format('ghcr.io/{0}/xboard:20250226', github.repository) }}
 
       - name: Notify on failure
         if: ${{ failure() }}
         run: |
-            curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的😭主人😭：
-            您使用kissyouhunter仓库的 xboard docker images 失败了，请及时处理！😭" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+          curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的😭主人😭：
+          您使用kissyouhunter仓库的 xboard docker images 推送至 ${{ inputs.registry }} 失败了，请及时处理！😭" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
 
       - name: telegram_bot
         run: |
           if [[ "${SERVERCHAN_SCKEY}" == "true" ]]; then
+            REGISTRY_URL="${{ inputs.registry == 'dockerhub' && format('{0}/xboard:20250226', secrets.DOCKERHUB_USERNAME) || format('ghcr.io/{0}/xboard:20250226', github.repository) }}"
             curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的✨主人✨：
-            您使用kissyouhunter仓库编译 xboard docker images 完成了！💐" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+            您使用kissyouhunter仓库编译 xboard docker images 完成了！💐 镜像地址：${REGISTRY_URL}" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
           fi
