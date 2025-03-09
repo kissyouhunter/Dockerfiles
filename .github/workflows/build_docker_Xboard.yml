@@ -18,7 +18,7 @@ on:
           - ghcr
 
 env:
-  REPO_URL: https://hub.doti.cc/kissyouhunter/Xboard-20250226.git
+  REPO_URL: https://github.com/cedar2025/Xboard.git
   SERVERCHAN_SCKEY: true
 
 jobs:
@@ -74,7 +74,7 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ${{ inputs.registry == 'dockerhub' && format('{0}/xboard:20250226', secrets.DOCKERHUB_USERNAME) || format('ghcr.io/{0}/xboard:20250226', github.repository) }}
+            ${{ inputs.registry == 'dockerhub' && 'kissyouhunter/xboard:20250226' || 'ghcr.io/kissyouhunter/xboard:20250226' }}
 
       - name: Notify on failure
         if: ${{ failure() }}
@@ -85,7 +85,7 @@ jobs:
       - name: telegram_bot
         run: |
           if [[ "${SERVERCHAN_SCKEY}" == "true" ]]; then
-            REGISTRY_URL="${{ inputs.registry == 'dockerhub' && format('{0}/xboard:20250226', secrets.DOCKERHUB_USERNAME) || format('ghcr.io/{0}/xboard:20250226', github.repository) }}"
+            REGISTRY_URL="${{ inputs.registry == 'dockerhub' && 'kissyouhunter/xboard:20250226' || 'ghcr.io/kissyouhunter/xboard:20250226' }}"
             curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的✨主人✨：
             您使用kissyouhunter仓库编译 xboard docker images 完成了！💐 镜像地址：${REGISTRY_URL}" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
           fi
