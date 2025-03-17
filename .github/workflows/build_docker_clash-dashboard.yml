@@ -57,7 +57,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/clash-dashboard:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/clash-dashboard:v1.19.3
 
       - name: Notify on failure
         if: ${{ failure() }}
