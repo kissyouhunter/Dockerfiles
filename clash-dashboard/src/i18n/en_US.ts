@@ -13,6 +13,7 @@ const EN = {
         labels: {
             startAtLogin: 'Start at login',
             language: 'language',
+            theme: 'Theme',
             setAsSystemProxy: 'Set as system proxy',
             allowConnectFromLan: 'Allow connect from Lan',
             proxyMode: 'Mode',
@@ -24,6 +25,8 @@ const EN = {
         values: {
             cn: '中文',
             en: 'English',
+            light: 'Light',
+            dark: 'Dark',
             global: 'Global',
             rules: 'Rules',
             direct: 'Direct',

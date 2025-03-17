@@ -1,6 +1,8 @@
 import classnames from 'classnames'
 import { Route, Navigate, Routes, useLocation, Outlet } from 'react-router-dom'
+import { useAtomValue } from 'jotai'
 
+import { themeAtom } from '@stores'
 // import Overview from '@containers/Overview'
 import Connections from '@containers/Connections'
 import ExternalControllerModal from '@containers/ExternalControllerDrawer'
@@ -17,6 +19,10 @@ import '../styles/iconfont.scss'
 
 export default function App () {
     useLogsStreamReader()
+    const theme = useAtomValue(themeAtom)
+
+    // Initialize theme
+    document.documentElement.setAttribute('data-theme', theme)
 
     const location = useLocation()
 

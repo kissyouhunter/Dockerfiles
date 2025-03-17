@@ -13,6 +13,7 @@ const CN = {
         labels: {
             startAtLogin: '开机时启动',
             language: '语言',
+            theme: '主题',
             setAsSystemProxy: '设置为系统代理',
             allowConnectFromLan: '允许来自局域网的连接',
             proxyMode: '代理模式',
@@ -24,6 +25,8 @@ const CN = {
         values: {
             cn: '中文',
             en: 'English',
+            light: '浅色',
+            dark: '深色',
             global: '全局',
             rules: '规则',
             direct: '直连',

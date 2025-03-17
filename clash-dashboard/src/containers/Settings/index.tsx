@@ -1,15 +1,17 @@
 import classnames from 'classnames'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useCallback } from 'react'
 
 import { Header, Card, Switch, ButtonSelect, type ButtonSelectOptions, Input, Select } from '@components'
 import { type Lang } from '@i18n'
 import { useObject } from '@lib/hook'
 import { jsBridge } from '@lib/jsBridge'
-import { useI18n, useClashXData, useGeneral, useVersion, useClient, identityAtom, hostSelectIdxStorageAtom, hostsStorageAtom, useAPIInfo } from '@stores'
+import { useI18n, useClashXData, useGeneral, useVersion, useClient, identityAtom, hostSelectIdxStorageAtom, hostsStorageAtom, useAPIInfo, themeAtom } from '@stores'
 import './style.scss'
 
 const languageOptions: ButtonSelectOptions[] = [{ label: '中文', value: 'zh_CN' }, { label: 'English', value: 'en_US' }]
+
+const themeOptions: ButtonSelectOptions[] = [{ label: '浅色', value: 'light' }, { label: '深色', value: 'dark' }]
 
 export default function Settings () {
     const { premium } = useVersion()
@@ -20,6 +22,7 @@ export default function Settings () {
     const hostsStorage = useAtomValue(hostsStorageAtom)
     const apiInfo = useAPIInfo()
     const { translation, setLang, lang } = useI18n()
+    const [theme, setTheme] = useAtom(themeAtom)
     const { t } = translation('Settings')
     const client = useClient()
     const [info, set] = useObject({
@@ -52,6 +55,11 @@ export default function Settings () {
     function changeLanguage (language: Lang) {
         setLang(language)
     }
+
+    const changeTheme = useCallback((theme: 'light' | 'dark') => {
+        setTheme(theme)
+        document.documentElement.setAttribute('data-theme', theme)
+    }, [setTheme])
 
     async function handleHttpPortSave () {
         await client.updateConfig({ port: info.httpProxyPort })
@@ -130,6 +138,10 @@ export default function Settings () {
                     <div className="w-full flex items-center justify-between px-8 py-3 md:w-1/2">
                         <span className="label font-bold">{t('labels.language')}</span>
                         <ButtonSelect options={languageOptions} value={lang} onSelect={(lang) => changeLanguage(lang as Lang)} />
+                    </div>
+                    <div className="w-full flex items-center justify-between px-8 py-3 md:w-1/2">
+                        <span className="label font-bold">{t('labels.theme')}</span>
+                        <ButtonSelect options={themeOptions} value={theme} onSelect={(theme) => changeTheme(theme as 'light' | 'dark')} />
                     </div>
                 </div>
                 <div className="flex flex-wrap">

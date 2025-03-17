@@ -17,11 +17,11 @@
     width: 100%;
     height: 100%;
     border-radius: 100%;
-    border: 5px solid transparentize($color-primary-dark, 0.3);
+    border: 5px solid color-mix(in srgb, var(--color-primary-dark) 70%, transparent);
     border-right: none;
     border-top: none;
     background-clip: padding-box;
-    box-shadow: inset 0 0 10px transparentize($color-primary-dark, 0.85);
+    box-shadow: inset 0 0 10px color-mix(in srgb, var(--color-primary-dark) 15%, transparent);
 }
 
 @keyframes spinner {

@@ -26,6 +26,8 @@ export const identityAtom = atom(true)
 
 export const languageAtom = atomWithStorage<Lang | undefined>('language', undefined)
 
+export const themeAtom = atomWithStorage<'light' | 'dark'>('theme', 'light')
+
 export function useI18n () {
     const [defaultLang, setLang] = useAtom(languageAtom)
     const lang = useMemo(() => defaultLang ?? getDefaultLanguage(), [defaultLang])

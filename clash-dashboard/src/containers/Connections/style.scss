@@ -97,7 +97,7 @@
         }
 
         &.completed {
-            background-color: darken($color-gray-light, 3%);
+            background-color: color-mix(in srgb, $color-gray-light 97%, black);
             color: rgba($color-primary-darken, 50%);
         }
     }

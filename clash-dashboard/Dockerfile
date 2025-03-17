@@ -1,5 +1,5 @@
 # Stage 1: Building the application
-FROM node:18-alpine as builder
+FROM node:18-alpine AS builder
 
 # Set the working directory
 WORKDIR /app

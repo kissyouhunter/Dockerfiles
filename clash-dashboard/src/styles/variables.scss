@@ -3,26 +3,98 @@
  * Style Common Variables
  */
 
-$background: #f4f5f6;
+// Light Mode Colors
+$light-background: #f4f5f6;
+$light-color-primary: #57befc;
+$light-color-primary-dark: #2c8af8;
+$light-color-primary-darken: #54759a;
+$light-color-primary-light: #7fcae4;
+$light-color-primary-lightly: #e4eaef;
+$light-color-gray: #d8dee2;
+$light-color-gray-light: #f3f6f9;
+$light-color-gray-dark: #b7c5d6;
+$light-color-gray-darken: #909399;
+$light-color-white: #fff;
+$light-color-green: #67c23a;
+$light-color-orange: #e6a23c;
+$light-color-red: #f56c6c;
+$light-color-black-light: #546b87;
+$light-color-black: #000;
 
-// primary colors
-$color-primary: #57befc;
-$color-primary-dark: #2c8af8;
-$color-primary-darken: #54759a;
-$color-primary-light: #7fcae4;
-$color-primary-lightly: #e4eaef;
+// Dark Mode Colors
+$dark-background: #1a1a1a;
+$dark-color-primary: #57befc;
+$dark-color-primary-dark: #2c8af8;
+$dark-color-primary-darken: #8ca5c4;
+$dark-color-primary-light: #7fcae4;
+$dark-color-primary-lightly: #2a3643;
+$dark-color-gray: #3a3a3a;
+$dark-color-gray-light: #2a2a2a;
+$dark-color-gray-dark: #505050;
+$dark-color-gray-darken: #707070;
+$dark-color-white: #1a1a1a;
+$dark-color-green: #67c23a;
+$dark-color-orange: #e6a23c;
+$dark-color-red: #f56c6c;
+$dark-color-black-light: #a9c0dd;
+$dark-color-black: #fff;
 
-// common colors
-$color-gray: #d8dee2;
-$color-gray-light: #f3f6f9;
-$color-gray-dark: #b7c5d6;
-$color-gray-darken: #909399;
-$color-white: #fff;
-$color-green: #67c23a;
-$color-orange: #e6a23c;
-$color-red: #f56c6c;
-$color-black-light: #546b87;
-$color-black: #000;
+// Dynamic Theme Variables
+:root {
+  --background: #{$light-background};
+  --color-primary: #{$light-color-primary};
+  --color-primary-dark: #{$light-color-primary-dark};
+  --color-primary-darken: #{$light-color-primary-darken};
+  --color-primary-light: #{$light-color-primary-light};
+  --color-primary-lightly: #{$light-color-primary-lightly};
+  --color-gray: #{$light-color-gray};
+  --color-gray-light: #{$light-color-gray-light};
+  --color-gray-dark: #{$light-color-gray-dark};
+  --color-gray-darken: #{$light-color-gray-darken};
+  --color-white: #{$light-color-white};
+  --color-green: #{$light-color-green};
+  --color-orange: #{$light-color-orange};
+  --color-red: #{$light-color-red};
+  --color-black-light: #{$light-color-black-light};
+  --color-black: #{$light-color-black};
+}
+
+[data-theme="dark"] {
+  --background: #{$dark-background};
+  --color-primary: #{$dark-color-primary};
+  --color-primary-dark: #{$dark-color-primary-dark};
+  --color-primary-darken: #{$dark-color-primary-darken};
+  --color-primary-light: #{$dark-color-primary-light};
+  --color-primary-lightly: #{$dark-color-primary-lightly};
+  --color-gray: #{$dark-color-gray};
+  --color-gray-light: #{$dark-color-gray-light};
+  --color-gray-dark: #{$dark-color-gray-dark};
+  --color-gray-darken: #{$dark-color-gray-darken};
+  --color-white: #{$dark-color-white};
+  --color-green: #{$dark-color-green};
+  --color-orange: #{$dark-color-orange};
+  --color-red: #{$dark-color-red};
+  --color-black-light: #{$dark-color-black-light};
+  --color-black: #{$dark-color-black};
+}
+
+// Alias variables for backward compatibility
+$background: var(--background);
+$color-primary: var(--color-primary);
+$color-primary-dark: var(--color-primary-dark);
+$color-primary-darken: var(--color-primary-darken);
+$color-primary-light: var(--color-primary-light);
+$color-primary-lightly: var(--color-primary-lightly);
+$color-gray: var(--color-gray);
+$color-gray-light: var(--color-gray-light);
+$color-gray-dark: var(--color-gray-dark);
+$color-gray-darken: var(--color-gray-darken);
+$color-white: var(--color-white);
+$color-green: var(--color-green);
+$color-orange: var(--color-orange);
+$color-red: var(--color-red);
+$color-black-light: var(--color-black-light);
+$color-black: var(--color-black);
 
 // response break point
 @mixin response($name) {

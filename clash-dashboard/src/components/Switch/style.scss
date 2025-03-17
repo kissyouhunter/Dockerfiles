@@ -26,7 +26,8 @@ $width: 32px;
         background-color: $color-gray-dark;
 
         &::after {
-            background-color: lighten($color-primary-lightly, 0.1);
+            background-color: var(--color-primary-lightly);
+            filter: brightness(1.1);
             box-shadow: 0 0 8px rgba($color-gray-darken, 0.5);
         }
     }

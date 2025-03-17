@@ -38,19 +38,19 @@
 
 .message-success {
     .message-icon {
-        background: linear-gradient(135deg, $color-green, darken($color-green, 5%));
+        background: linear-gradient(135deg, $color-green, color-mix(in srgb, $color-green 95%, black));
     }
 }
 
 .message-warning {
     .message-icon {
-        background: linear-gradient(135deg, $color-orange, darken($color-orange, 5%));
+        background: linear-gradient(135deg, $color-orange, color-mix(in srgb, $color-orange 95%, black));
     }
 }
 
 .message-error {
     .message-icon {
-        background: linear-gradient(135deg, $color-red, darken($color-red, 10%));
+        background: linear-gradient(135deg, $color-red, color-mix(in srgb, $color-red 90%, black));
     }
 }
 
