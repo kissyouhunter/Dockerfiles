@@ -16,17 +16,17 @@ interface ProxyProps extends BaseComponentProps {
 }
 
 const TagColors = {
-    'var(--color-primary-darken)': 0,
-    'var(--color-green)': 260,
-    'var(--color-orange)': 600,
-    'var(--color-red)': Infinity,
+    '#54759a': 0,
+    '#67c23a': 260,
+    '#e6a23c': 600,
+    '#f56c6c': Infinity,
 }
 
 const TagTextColors = {
-    'var(--color-primary-darken)': 'var(--color-white)',
-    'var(--color-green)': 'var(--color-white)',
-    'var(--color-orange)': 'var(--color-white)',
-    'var(--color-red)': 'var(--color-white)',
+    '#54759a': '#ffffff',
+    '#67c23a': '#ffffff',
+    '#e6a23c': '#ffffff',
+    '#f56c6c': '#ffffff',
 }
 
 export function Proxy (props: ProxyProps) {
@@ -77,13 +77,13 @@ export function Proxy (props: ProxyProps) {
         [delay, meanDelay],
     )
 
-    const backgroundColor = hasError ? 'var(--color-gray-light)' : color
+    const backgroundColor = hasError ? '#4a4a4a' : color
     return (
         <div className={classnames('proxy-item', { 'opacity-50': hasError }, className)}>
             <div className="flex-1">
                 <span
-                    className={classnames('rounded-sm py-[3px] px-1 text-[10px]', { 'text-gray-600': hasError })}
-                    style={{ backgroundColor, color: hasError ? undefined : TagTextColors[backgroundColor as keyof typeof TagTextColors] }}>
+                    className={classnames('rounded-sm py-[3px] px-1 text-[10px]')}
+                    style={{ backgroundColor, color: hasError ? '#d8dee2' : TagTextColors[backgroundColor as keyof typeof TagTextColors] }}>
                     {config.type}
                 </span>
                 <p className="proxy-name">{config.name}</p>
@@ -95,3 +95,4 @@ export function Proxy (props: ProxyProps) {
         </div>
     )
 }
+
