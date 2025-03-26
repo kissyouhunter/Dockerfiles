@@ -51,8 +51,8 @@ export function Group (props: GroupProps) {
     return (
         <div className="proxy-group">
             <div className="mt-4 h-10 w-full flex items-center justify-between md:mt-0 md:h-15 md:w-auto">
-                <span className="overflow-ellipsis h-6 w-35 overflow-hidden whitespace-nowrap px-5 md:w-30">{ config.name }</span>
-                <Tag className="mr-5 md:mr-0">{ config.type }</Tag>
+                <span className="overflow-ellipsis h-6 w-40 overflow-hidden whitespace-nowrap px-5 md:w-35">{ config.name }</span>
+                <Tag className="ml-3 mr-5 md:mr-0">{ config.type }</Tag>
             </div>
             <div className="flex-1 py-2 md:py-4">
                 <Tags
