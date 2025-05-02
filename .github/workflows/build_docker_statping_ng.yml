@@ -50,7 +50,6 @@ jobs:
         run: |
           git clone -b docker-cross-compile $REPO_URL docker_build
           cd docker_build && sed -i 's/EXPOSE \$PORT/EXPOSE 8080/' Dockerfile
-          cat Dockerfile
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
