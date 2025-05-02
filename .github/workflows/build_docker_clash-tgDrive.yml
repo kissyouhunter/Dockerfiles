@@ -81,7 +81,7 @@ jobs:
           tags: |
             ${{ inputs.registry == 'dockerhub' && format('kissyouhunter/tgdrive:{0}', inputs.tag) || '' }}
             ${{ inputs.registry == 'ghcr' && format('ghcr.io/kissyouhunter/tgdrive:{0}', inputs.tag) || '' }}
-            ${{ inputs.registry == 'both' && format('kissyouhunter/tgdrive:{0},ghcr.io/kissyouhunter/xboard:{0}', inputs.tag) || '' }}
+            ${{ inputs.registry == 'both' && format('kissyouhunter/tgdrive:{0},ghcr.io/kissyouhunter/tgdrive:{0}', inputs.tag) || '' }}
 
       - name: Notify on failure
         if: ${{ failure() }}
