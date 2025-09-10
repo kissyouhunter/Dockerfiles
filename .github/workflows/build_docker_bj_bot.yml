@@ -1,0 +1,98 @@
+name: build_docker bj-bot
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
+      registry:
+        description: 'Choose registry to push image (dockerhub, ghcr, or both)'
+        required: true
+        default: 'both'
+        type: choice
+        options:
+          - dockerhub
+          - ghcr
+          - both
+      tag:
+        description: 'Custom tag for the image'
+        required: true
+        default: 'latest'
+
+env:
+  REPO_URL: https://github.com/kissyouhunter/Dockerfiles.git
+  SERVERCHAN_SCKEY: true
+
+jobs:
+  build_docker:
+    name: Build docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: telegrame_bot
+        run: |
+          cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c > CPU
+          cat /proc/cpuinfo | grep "cpu cores" | uniq >> CPU
+          sed -i 's|[[:space:]]||g; s|^.||' CPU && sed -i 's|CPU||g; s|pucores:||' CPU
+          CPUNAME="$(awk 'NR==1' CPU)" && CPUCORES="$(awk 'NR==2' CPU)"
+          rm -rf CPU
+          if [[ "${SERVERCHAN_SCKEY}" == "true" ]]; then
+            curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=🎉 主人：
+            您正在使用kissyouhunter仓库的 {CPU型号为 [ ${CPUNAME} ] 核心数 为 [ ${CPUCORES} ] 线程数为 [ $(nproc) ]的机器} 编译您自己的 bj-bot docker images (推送至 ${{ inputs.registry }}，标签为 ${{ inputs.tag }})，请耐心等待...... 😋" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Clone source code
+        run: |
+          git clone $REPO_URL docker_build
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        if: ${{ inputs.registry == 'dockerhub' || inputs.registry == 'both' }}
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Login to GitHub Container Registry
+        if: ${{ inputs.registry == 'ghcr' || inputs.registry == 'both' }}
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.REPO_TOKEN }}
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v6
+        with:
+          context: ./docker_build
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ${{ inputs.registry == 'dockerhub' && format('kissyouhunter/bj-bot:{0}', inputs.tag) || '' }}
+            ${{ inputs.registry == 'ghcr' && format('ghcr.io/kissyouhunter/bj-bot:{0}', inputs.tag) || '' }}
+            ${{ inputs.registry == 'both' && format('kissyouhunter/bj-bot:{0},ghcr.io/kissyouhunter/bj-bot:{0}', inputs.tag) || '' }}
+
+      - name: Notify on failure
+        if: ${{ failure() }}
+        run: |
+          curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的😭主人😭：
+          您使用kissyouhunter仓库的 bj-bot docker images (标签为 ${{ inputs.tag }}) 推送至 ${{ inputs.registry }} 失败了，请及时处理！😭" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+
+      - name: telegram_bot
+        run: |
+          if [[ "${SERVERCHAN_SCKEY}" == "true" ]]; then
+            REGISTRY_URL="${{ inputs.registry == 'dockerhub' && format('kissyouhunter/bj-bot:{0}', inputs.tag) || inputs.registry == 'ghcr' && format('ghcr.io/kissyouhunter/bj-bot:{0}', inputs.tag) || format('kissyouhunter/bj-bot:{0}, ghcr.io/kissyouhunter/bj-bot:{0}', inputs.tag) }}"
+            curl -k --data chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" --data "text=我亲爱的✨主人✨：
+            您使用kissyouhunter仓库编译 bj-bot docker images (标签为 ${{ inputs.tag }}) 完成了！💐 镜像地址：${REGISTRY_URL}" "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage"
+          fi
