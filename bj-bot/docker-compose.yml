@@ -6,6 +6,6 @@ services:
     # 直接在 command 中传入 token 与 interval
     command:
       - "--token"
-      - "1970156062:AAGrqxzK_uUSrhdG-6QZCD_7MaU_K8149Ew"
+      - "xxxx:xxxxxxx"
       - "--interval"
       - "60"
